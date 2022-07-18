@@ -51,6 +51,33 @@ describe('Auth0Provider', () => {
     await waitForNextUpdate();
   });
 
+  it('should configure an instance of the Auth0Client with buildRedirectUri', async () => {
+    const buildRedirectUriFun = () => 'qux';
+    const opts = {
+      clientId: 'foo',
+      domain: 'bar',
+      redirectUri: 'baz',
+      buildRedirectUri: buildRedirectUriFun,
+      maxAge: 'qux',
+      extra_param: '__test_extra_param__',
+    };
+    const wrapper = createWrapper(opts);
+    const { waitForNextUpdate } = renderHook(() => useContext(Auth0Context), {
+      wrapper,
+    });
+    expect(Auth0Client).toHaveBeenCalledWith(
+      expect.objectContaining({
+        client_id: 'foo',
+        domain: 'bar',
+        redirect_uri: 'baz',
+        max_age: 'qux',
+        buildRedirectUri: buildRedirectUriFun,
+        extra_param: '__test_extra_param__',
+      })
+    );
+    await waitForNextUpdate();
+  });
+
   it('should pass user agent to Auth0Client', async () => {
     const opts = {
       clientId: 'foo',

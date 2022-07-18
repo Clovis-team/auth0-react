@@ -62,6 +62,10 @@ export interface Auth0ProviderOptions {
    */
   skipRedirectCallback?: boolean;
   /**
+   * Will allow you to override the redirect_uri for each method who call it.
+   */
+  buildRedirectUri?: Auth0ClientOptions['buildRedirectUri'];
+  /**
    * Your Auth0 account domain such as `'example.auth0.com'`,
    * `'example.eu.auth0.com'` or , `'example.mycompany.com'`
    * (when using [custom domains](https://auth0.com/docs/custom-domains))
